@@ -1,0 +1,43 @@
+/*
+动态规划-石子合并经典问题
+*/
+
+#include <iostream>
+#include <vector>
+#include <cmath>
+
+using namespace std;
+int mergeCost(int array[],int size){
+    int dp[size][size],sum[size][size];
+    for(int i=0;i<size;i++)
+        for(int j=0;j<size;j++)
+        sum[i][j]=0,dp[i][j]=0x0fff;
+    for(int i=0;i<size;i++)
+        sum[i][i]=array[i],dp[i][i]=0;
+   
+    for(int len=1;len<size;len++)
+        for(int i=0;i+len<size;i++)
+            for(int k=i;k<i+len;k++)
+                sum[i][i+len] = sum[i][k] + sum[k+1][i+len],
+                dp[i][i+len] = min(dp[i][i+len],dp[i][k]+dp[k+1][i+len]+sum[i][i+len];
+    
+    return dp[0][size-1];
+}
+
+int main(){
+    int num,i;
+    cin>>num;
+    int array[num];
+    for(i=0;i<num;i++)
+        cin>>array[i];
+    
+    cout<<merge(array,num);
+    return 0;
+}
+
+/*
+ * https://blog.csdn.net/qq_40507857/article/details/81266843
+ *
+ * dp[i][j]=0, i=j
+ * dp[i][j]=min(dp[i][k],dp[k+1][j]+sum[i][j]), i!=j
+ */
